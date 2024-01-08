@@ -6,6 +6,14 @@
 deblink="https://download.withsecure.com/PSB/latest/f-secure-linuxsecurity.deb"
 rpmlink="https://download.withsecure.com/PSB/latest/f-secure-linuxsecurity.rpm"
 
+#Pour automatiser le script renseigner dans le champs automatique la valeur "EPP" OU "EDR"
+#automatique="EDR" # Installation de WithSecure Elements EPP+EDR
+#automatique="EPP" # uniquement l'installation de WithSecure Elements EPP
+#automatique="" # Laisser vide pour activer l'interface graphique
+automatique=""
+
+#Renseigner la clé de licence :
+license_key=""
 
 
 ################################################################################################################
@@ -138,6 +146,7 @@ install_libraries_auditd() {
 }
 
 ask_license_key() {
+  
     local license_key=$(zenity --entry --title="Clé de Licence" --text="Veuillez saisir votre clé de licence :")
 
     if [ -n "$license_key" ]; then
@@ -166,6 +175,8 @@ download_and_install_package() {
             ;;
     esac
 }
+
+if [ -z "$automatique" ]; then
 
 
 while [ "$menu" != 1 ]; do
@@ -237,3 +248,20 @@ sleep 1
 exit 0
 fi
 done
+
+elif [ "$automatique" == "EPP" ]; then
+		detect_distribution
+		detect_version
+		install_libraries "$DISTRIBUTION" "$VERSION" 
+		download_and_install_package "$DISTRIBUTION"
+		sudo /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key $license_key
+
+elif [ "$automatique" == "EDR" ]; then
+		detect_distribution
+		detect_version
+		install_libraries_auditd "$DISTRIBUTION" "$VERSION" 
+		download_and_install_package "$DISTRIBUTION"
+		sudo /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key $license_key
+
+
+fi
