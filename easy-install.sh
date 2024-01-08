@@ -173,7 +173,7 @@ while [ "$menu" != 1 ]; do
 OPTION=$(whiptail --title "WithSecure Elements Linux" --menu "Install WithSecure Elements Linux agent" --fb --cancel-button "Exit" 30 70 10 \
 "1" "Install Elements EPP" \
 "2" "Install Elements EPP + EDR" \
-"3" "Check WithSecure communication" \
+"3" "Activation licence" \
 "4" "WSDIAG" \ 3>&1 1>&2 2>&3)
 
 #clear
@@ -212,37 +212,8 @@ if [ "$OPTION" = "2" ]; then
 	
 	
 if [ "$OPTION" = "3" ]; then
-        echo "======================================="
-        echo "========== CHECK SERVRS =============="
-        echo "======================================="
-        echo ""
-    echo 'please wait'
 
-     orsp=$(host -W1 fsapi.com)
-     orspf=$(echo $orsp | grep "NXDOMAIN\|timed out")
-
-     fsecure=$(host -W1 withsecure.com)
-     fsecuref=$(echo $fsecure | grep "NXDOMAIN\|timed out")
-
-
-     if [ ${#orspf} -gt 1 ]
-     then
-	 orspchk="ERROR"
-     echo  "Check orsp.f-secure.com = ERROR"
-     else
-	 orspchk="OK"
-     echo  "Check orsp.f-secure.com = OK"
-     fi
-
-
-     if [ ${#fsecuref} -gt 1 ]
-     then
-	 bddchk="ERROR"
-     echo  "Check f-secure.com = ERROR"
-     else
-	 bddchk="OK"
-     echo  "Check f-secure.com = OK"
-     fi
+		ask_license_key
 
 fi
  
