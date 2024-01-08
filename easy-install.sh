@@ -218,16 +218,10 @@ if [ "$OPTION" = "3" ]; then
         echo ""
     echo 'please wait'
 
-     xmlshavlik=$(host -W1 xml.shavlik.com)
-     xmlshavlikf=$(echo $xmlshavlik |grep "NXDOMAIN\|timed out")
-
-     ivanti=$(host -W1 xml.ivanti.com)
-     ivantif=$(echo $ivanti | grep "NXDOMAIN\|timed out")
-
-     orsp=$(host -W1 orsp.f-secure.com)
+     orsp=$(host -W1 fsapi.com)
      orspf=$(echo $orsp | grep "NXDOMAIN\|timed out")
 
-     fsecure=$(host -W1 f-secure.com)
+     fsecure=$(host -W1 withsecure.com)
      fsecuref=$(echo $fsecure | grep "NXDOMAIN\|timed out")
 
 
@@ -240,15 +234,6 @@ if [ "$OPTION" = "3" ]; then
      echo  "Check orsp.f-secure.com = OK"
      fi
 
-
-     if [ ${#xmlshavlikf} -gt 1 ] || [ ${#ivantif} -gt 1 ]
-     then
-	 swupchk="ERROR"
-     echo  "Check xml.shavlik.com and ivanti = ERROR"
-     else
-	 swupchk="OK"
-     echo  "Check xml.shavlik.com and ivanti = OK"
-     fi
 
      if [ ${#fsecuref} -gt 1 ]
      then
